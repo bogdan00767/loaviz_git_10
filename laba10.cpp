@@ -1,4 +1,4 @@
-// (поиск расстояний, взвешенный граф)
+// (поиск расстояний, взвешенный граф), вводить количество вершин при запуске
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -6,6 +6,7 @@
 #include <limits>
 #include <iomanip>
 #include <queue>
+#include <cstring>
 
 using namespace std;
 
@@ -28,14 +29,22 @@ int main(int argc, char* argv[]) {
     bool useCommandLine = false;
     bool isWeighted = false;
     bool isOriented = false;
+    bool vertFromCmd = false;
 
     for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "-weighted") == 0 && i + 1 < argc) {
             isWeighted = (atoi(argv[i + 1]) != 0);
             useCommandLine = true;
             i++;
-        } else if (strcmp(argv[i], "-oriented") == 0 && i + 1 < argc) {
+        }
+        else if (strcmp(argv[i], "-oriented") == 0 && i + 1 < argc) {
             isOriented = (atoi(argv[i + 1]) != 0);
+            useCommandLine = true;
+            i++;
+        }
+        else if (strcmp(argv[i], "-vert") == 0 && i + 1 < argc) {
+            numG = atoi(argv[i + 1]);
+            vertFromCmd = true;
             useCommandLine = true;
             i++;
         }
@@ -44,10 +53,17 @@ int main(int argc, char* argv[]) {
     if (useCommandLine) {
         cout << "Режим: командная строка\n";
         cout << "Взвешенный: " << (isWeighted ? "да" : "нет") << "\n";
-        cout << "Ориентированный: " << (isOriented ? "да" : "нет") << "\n\n";
+        cout << "Ориентированный: " << (isOriented ? "да" : "нет") << "\n";
+        if (vertFromCmd) {
+            cout << "Количество вершин: " << numG << "\n";
+        }
+        cout << "\n";
     }
 
-    numG = isInteger("\nВведите количество вершин графа: ");
+    if (!vertFromCmd) {
+        numG = isInteger("\nВведите количество вершин графа: ");
+    }
+
     while (numG <= 0) {
         cout << "Ошибка! Количество вершин должно быть положительным\n";
         numG = isInteger("Введите количество вершин графа: ");
