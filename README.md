@@ -3,6 +3,6 @@
 *g++ -std=c++11 -o laba10 laba10.cpp*
 
 # Запуск проекта 0 (невзв, неор) или 1 (взв, ор)
-*./laba10 -weighted 0 -oriented 1*
+*./laba10 -weighted <0|1> -oriented <0|1> -vert <number>*
 # Запуск проекта без параметров
 *./laba10*
